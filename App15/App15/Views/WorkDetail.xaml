@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App15.Views.WorkDetail"
+             xmlns:ctrls="clr-namespace:AsNum.XFControls;assembly=AsNum.XFControls">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="{StaticResource Accent}" Padding="20">
+
+            <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
+                <Button x:Name="btnOrder" HorizontalOptions="FillAndExpand" BackgroundColor="Gray" TextColor="White" Text="Auftrag" Clicked="btnOrder_Clicked"/>
+                <Button x:Name="btnAchievement" HorizontalOptions="FillAndExpand" BackgroundColor="Gray" TextColor="White" Text="Leistung" Clicked="btnAchievement_Clicked"/>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                <Label Text="Start" TextColor="White" FontSize="Small"></Label>
+                <DatePicker x:Name="DateAchie" DateSelected="DateAchie_DateSelected" />
+                <TimePicker x:Name="TimeAchie" PropertyChanged="TimeAchie_PropertyChanged" />
+                <Button x:Name="btnStart" HorizontalOptions="FillAndExpand" BackgroundColor="Gray" FontSize="Small" TextColor="White" Text="Start" Clicked="btnStart_Clicked"/>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                <Label Text="Stopp" TextColor="White" FontSize="Small"></Label>
+                <DatePicker x:Name="DateAchie2" DateSelected="DateAchie2_DateSelected" />
+                <TimePicker x:Name="TimeAchie2" PropertyChanged="TimeAchie2_PropertyChanged" />
+                <Button x:Name="btnStopp" HorizontalOptions="FillAndExpand" BackgroundColor="Gray" FontSize="Small" TextColor="White" Text="Stopp" Clicked="btnStopp_Clicked"/>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                <Label Text="Menge" TextColor="White" FontSize="Small"></Label>
+                <Entry x:Name="Menge" Text="" FontSize="Medium" Keyboard="Numeric"  />
+                <Entry x:Name="Unit" Text="" FontSize="Medium" />
+                <ctrls:CheckBox x:Name="chkCharge" Grid.Row="8" Grid.Column="1" ShowLabel="True" Text="Verrechenbar" HorizontalOptions="EndAndExpand" Checked="True" />
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                <Label Text="Info" TextColor="White" FontSize="Small"></Label>
+                <Entry x:Name="Info" Text="" FontSize="Medium" HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                <Button x:Name="btnSave" HorizontalOptions="FillAndExpand" BackgroundColor="Gray" TextColor="White" Text="Speichern" Clicked="btnSave_Clicked"/>
+                <Button x:Name="btnDelete" HorizontalOptions="FillAndExpand" BackgroundColor="Gray" TextColor="White" Text="Löschen" Clicked="btnDelete_Clicked"/>
+                <Button x:Name="btnAbort" HorizontalOptions="FillAndExpand" BackgroundColor="Gray" TextColor="White" Text="Zurück" Clicked="btnAbort_Clicked"/>
+            </StackLayout>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
