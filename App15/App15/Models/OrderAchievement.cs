@@ -50,6 +50,7 @@ namespace App15.Models
         public bool IsNew { get; set; }
         public string TxtLarge { get; set; }
         public string TxtSmall { get; set; }
+        public string TxtSmall2 { get; set; }
         public string Image { get; set; }
 
         public OrderAchievement() { }

@@ -17,7 +17,7 @@ namespace App15.Helpers
             //var aboutPage = new Login() { Title = "Login", Icon = "p_generic.png" };
 
             var playPage = new Time() { Title = "TIMEDOC Zeiten", Icon = null };
-            var workPage = new NavigationPage(new Work() { Title = "Work", Icon = null });
+            var workPage = new NavigationPage(new Work() { Title = "Leistungserfassung", Icon = null });
             var settingsPage = new AboutPage() { Title = "About", Icon = null };
             var aboutPage = new Login() { Title = "Login", Icon = null };
 

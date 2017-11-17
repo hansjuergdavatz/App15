@@ -54,6 +54,11 @@ namespace App15.Data
         {
             return restService.UpdateOrderAchievement(orderAchievement);
         }
+        public Task<bool> DeleteOrderAchievement(OrderAchievement orderAchievement)
+        {
+            return restService.DeleteOrderAchievement(orderAchievement);
+        }
+
 
         public Task<List<Order>> GetOrderList(string search)
         {

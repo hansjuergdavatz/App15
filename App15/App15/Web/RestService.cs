@@ -178,16 +178,16 @@ namespace App15.Web
         // Leistungserfassung
         public async Task<List<OrderAchievement>> GetNewOrderAchievementAsync(string idOrder, string idAchievement, bool start, bool listDetail)
         {
-            // http://localhost:63491/api/orderAchievement/neu?idOrder=00000000-0000-0000-0000-000000000000&idAchievement=00000000-0000-0000-0000-000000000000&start=true&listDetail=true
+            // http://localhost:63491/api/orderAchievement/neu?idOrder=00000000-0000-0000-0000-000000000000&idAchievement=00000000-0000-0000-0000-000000000000&start=true&listDetail=true&sortDesc=true
 
             List<OrderAchievement> list = null;
             string resource = string.Empty;
             string guidEmpty = "00000000-0000-0000-0000-000000000000";
 
             if (idAchievement.Length == 0 && idOrder.Length == 0)
-                resource = String.Format("{0}orderAchievement/neu?idOrder={1}&idAchievement{2}&start={1}&listDetail={2}", Constants.RestUrl, guidEmpty, guidEmpty, start, listDetail);
+                resource = String.Format("{0}orderAchievement/neu?idOrder={1}&idAchievement={2}&start={3}&listDetail={4}&sortDesc=true", Constants.RestUrl, guidEmpty, guidEmpty, start, listDetail);
             else
-                resource = String.Format("{0}orderAchievement/neu?idOrder={1}&idAchievement{2}&start={1}&listDetail={2}", Constants.RestUrl, idOrder, idAchievement, start, listDetail);
+                resource = String.Format("{0}orderAchievement/neu?idOrder={1}&idAchievement={2}&start={3}&listDetail={4}&sortDesc=true", Constants.RestUrl, idOrder, idAchievement, start, listDetail);
 
             var uri = new Uri(string.Format(resource, string.Empty));
 
@@ -208,10 +208,39 @@ namespace App15.Web
 
             return list;
         }
+
+        public async Task<List<OrderAchievement>> StartStopAsync(string idOrderAchievement, bool start)
+        {
+            // http://localhost:63491/api/orderAchievement/start/stop?idOrderAchievement=f1f99fdc-3643-42ad-9ffa-4367c147477e&Start=true&listDetail=true&sortDesc=true
+
+            List<OrderAchievement> list = null;
+            string resource = String.Format("{0}orderAchievement/start/stop?idOrderAchievement={1}&start={2}&listDetail=true&sortDesc=true", Constants.RestUrl, idOrderAchievement, start);
+            var uri = new Uri(string.Format(resource, string.Empty));
+
+            try
+            {
+                var cont = new StringContent(string.Empty, Encoding.UTF8, "application/json");
+                var response = await client.PutAsync(uri, cont);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    list = JsonConvert.DeserializeObject<List<OrderAchievement>>(content);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"				ERROR {0}", ex.Message);
+            }
+
+            return list;
+        }
+
+
         public async Task<List<OrderAchievement>> GetListOrderAchievementAsync(DateTime day, bool listDetail)
         {
             // http://localhost:63491/api/orderAchievement/list/detail?start=2017-11-10
             // http://localhost:63491/api/orderAchievement/list/cumulated?start=2017-11-10
+            // http://localhost:63491/api/orderAchievement/list/detail?start=2017-11-17&sortDesc=true
 
             List<OrderAchievement> list = null;
 
@@ -219,7 +248,7 @@ namespace App15.Web
             if (listDetail)
                 ListTyp = "detail";
 
-            string resource = String.Format("{0}orderAchievement/list/{1}?&start={2}", Constants.RestUrl, ListTyp, day.ToString("yyyy-MM-dd"));
+            string resource = String.Format("{0}orderAchievement/list/{1}?&start={2}&sortDesc=true", Constants.RestUrl, ListTyp, day.ToString("yyyy-MM-dd"));
             var uri = new Uri(string.Format(resource, string.Empty));
 
             try
@@ -268,6 +297,37 @@ namespace App15.Web
                 return false;
             }
         }
+        public async Task<bool> DeleteOrderAchievement(OrderAchievement orderAchievement)
+        {
+
+            // RestUrl = http://localhost:63491/api/orderAchievement?idOrderAchievement=e156db40-97e2-49c6-9a03-3f3bf05f38f3
+
+            string resource = String.Format("{0}orderAchievement?idOrderAchievement={1}", Constants.RestUrl, orderAchievement.Id);
+            var uri = new Uri(string.Format(resource, string.Empty));
+
+            try
+            {
+                //var json = JsonConvert.SerializeObject(orderAchievement);
+                //var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = null;
+
+                response = await client.DeleteAsync(uri);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine(@"				OrderAchievement successfully saved.");
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"				ERROR {0}", ex.Message);
+                return false;
+            }
+        }
+
         public async Task<List<Order>> GetOrderList(string search)
         {
             List<Order> list = null;

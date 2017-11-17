@@ -31,17 +31,24 @@ namespace App15.Views
             base.OnAppearing();
 
             _user = await App.Database.GetCoworker();
-            if (_user == null)
-            {
-                var tabbedPage = this.Parent as MainTabbedPage;
-                tabbedPage.SwitchTab(3);
-            }
-            else
+            if (_user != null)
             {
                 OADayDate.Date = DateTime.Now;
                 _dateSelected = OADayDate.Date;
-                await LoadList(false);
+                await LoadList(true);
             }
+
+            //if (_user == null)
+            //{
+            //    var tabbedPage = this.Parent as MainTabbedPage;
+            //    tabbedPage.SwitchTab(3);
+            //}
+            //else
+            //{
+            //    OADayDate.Date = DateTime.Now;
+            //    _dateSelected = OADayDate.Date;
+            //    await LoadList(false);
+            //}
         }
 
         private async void SetUIHandlers()
@@ -52,7 +59,7 @@ namespace App15.Views
             _user = await App.Database.GetCoworker();
 
             if (_user != null)
-                await LoadList(false);
+                await LoadList(true);
         }
 
         async Task LoadList(bool detail)
@@ -79,9 +86,10 @@ namespace App15.Views
         {
             foreach (OrderAchievement item in list)
             {
-                string menge = item.Amount.ToString("0.00") + item.Unit;
+                string menge = " Menge: " + item.Amount.ToString("0.00") + item.Unit;
                 item.TxtLarge = item.OrderNrDesc;
-                item.TxtSmall = item.AchieName + " - Menge: " + menge;
+                item.TxtSmall = item.AchieName;
+                item.TxtSmall2 = item.AmountInfo + menge;
 
                 if (item.Status == 100)
                     item.Image = "ic_update_black_24dp.png";
@@ -90,16 +98,24 @@ namespace App15.Views
             }
         }
 
-
-
-        private void btnCreate_Clicked(object sender, EventArgs e)
+        private async void btnStart_Clicked(object sender, EventArgs e)
         {
+            // Basic-http
+            App.restManager = new RestManager(new Web.RestService());
 
-        }
-
-        private void btnStart_Clicked(object sender, EventArgs e)
-        {
-
+            try
+            {
+                list = await App.restManager.GetNewOrderAchievementAsync(string.Empty,string.Empty,true,true);
+                if (list != null)
+                {
+                    SetDisplayText();
+                    OrderAchievementListView.ItemsSource = list;
+                }
+            }
+            catch (Exception)
+            {
+                OrderAchievementListView.ItemsSource = null;
+            }
         }
 
         private void OADayDate_DateSelected(object sender, DateChangedEventArgs e)
@@ -134,22 +150,23 @@ namespace App15.Views
         }
         private async void Refresh()
         {
-            await LoadList(false);
+            await LoadList(true);
         }
 
 
-        private async void btnList_Clicked(object sender, EventArgs e)
-        {
-            if (btnList.Text == "Detail")
-            {
-                await LoadList(true);
-                btnList.Text = "Komp.";
-            }
-            else
-            {
-                await LoadList(false);
-                btnList.Text = "Detail";
-            }
-        }
+        //private async void btnList_Clicked(object sender, EventArgs e)
+        //{
+        //    // TODO immer Detail-Liste
+        //    if (btnList.Text == "Detail")
+        //    {
+        //        await LoadList(true);
+        //        btnList.Text = "Komp.";
+        //    }
+        //    else
+        //    {
+        //        await LoadList(false);
+        //        btnList.Text = "Detail";
+        //    }
+        //}
     }
 }

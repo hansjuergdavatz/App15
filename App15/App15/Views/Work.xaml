@@ -8,17 +8,17 @@
             <Label Text="Datum: " FontSize="20" TextColor="White" VerticalOptions="Center"/>
             <DatePicker x:Name="OADayDate" DateSelected="OADayDate_DateSelected" />
             <Label x:Name="lblConnect" FontSize="20" TextColor="White" VerticalOptions="Center" Text="" />
+            <Button x:Name="btnStart" HorizontalOptions="FillAndExpand" BackgroundColor="Gray" TextColor="White" Text="Start" Clicked="btnStart_Clicked"/>
         </StackLayout>
 
-        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-            <Button x:Name="btnStart" HorizontalOptions="FillAndExpand" BackgroundColor="Gray" TextColor="White" Text="Start" Clicked="btnStart_Clicked"/>
+        <!--<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
             <Button x:Name="btnCreate" HorizontalOptions="FillAndExpand" BackgroundColor="Gray" TextColor="White" Text="Erfassen" Clicked="btnCreate_Clicked"/>
-            <Button x:Name="btnList" HorizontalOptions="FillAndExpand" BackgroundColor="Gray" TextColor="White" Text="Detail" Clicked="btnList_Clicked"/>
-        </StackLayout>
+            --><!--<Button x:Name="btnList" HorizontalOptions="FillAndExpand" BackgroundColor="Gray" TextColor="White" Text="Detail" Clicked="btnList_Clicked"/>--><!--
+        </StackLayout>-->
 
         <ListView x:Name="OrderAchievementListView"
             ItemsSource="{Binding Path=OrderAchievement}"
-            ListView.RowHeight="60" ItemSelected="OrderAchievement_ItemSelected" >
+            ListView.RowHeight="80" ItemSelected="OrderAchievement_ItemSelected" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -28,6 +28,7 @@
                                 <Entry Text="{Binding Id}" IsVisible="False"/>
                                 <Label Text="{Binding TxtLarge}" FontSize="Small" />
                                 <Label Text="{Binding TxtSmall}" FontSize="Small" />
+                                <Label Text="{Binding TxtSmall2}" FontSize="Micro" />
                             </StackLayout>
                         </StackLayout>
                     </ViewCell>

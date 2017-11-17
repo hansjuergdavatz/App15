@@ -134,9 +134,14 @@ namespace App15.Views
 
         }
 
-        private void btnDelete_Clicked(object sender, EventArgs e)
+        private async void btnDelete_Clicked(object sender, EventArgs e)
         {
+            App.restManager = new RestManager(new Web.RestService());
+            await App.restManager.DeleteOrderAchievement(_actOrderAchievement);
 
+            DependencyService.Get<IMessage>().ShortAlert("Daten gelöscht.");
+
+            await Navigation.PopAsync();
         }
 
         private async void btnAbort_Clicked(object sender, EventArgs e)
@@ -187,9 +192,23 @@ namespace App15.Views
 
         }
 
-        private void btnStart_Clicked(object sender, EventArgs e)
+        private async void btnStart_Clicked(object sender, EventArgs e)
         {
+            App.restManager = new RestManager(new Web.RestService());
 
+            try
+            {
+                var list = await App.restManager.GetNewOrderAchievementAsync(_actOrderAchievement.IdOrder.ToString(), _actOrderAchievement.IdAchievement.ToString(), true, true);
+                if (list != null)
+                {
+                    DependencyService.Get<IMessage>().ShortAlert("Daten gespeichert.");
+                    await Navigation.PopAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                DependencyService.Get<IMessage>().ShortAlert(ex.Message);
+            }
         }
     }
 }
