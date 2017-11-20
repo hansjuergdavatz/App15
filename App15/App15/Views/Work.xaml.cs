@@ -155,9 +155,24 @@ namespace App15.Views
             await LoadList(true);
         }
 
-        private void btnCreate_Clicked(object sender, EventArgs e)
+        private async void btnCreate_Clicked(object sender, EventArgs e)
         {
+            // Basic-http
+            App.restManager = new RestManager(new Web.RestService());
 
+            try
+            {
+                list = await App.restManager.GetNewOrderAchievementAsync(string.Empty, string.Empty, false, true);
+                if (list != null)
+                {
+                    SetDisplayText();
+                    OrderAchievementListView.ItemsSource = list;
+                }
+            }
+            catch (Exception)
+            {
+                OrderAchievementListView.ItemsSource = null;
+            }
         }
 
 

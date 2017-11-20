@@ -46,6 +46,19 @@ namespace App15.Views
                 btnStopp.IsVisible = false;
             }
 
+            if (_actOrderAchievement.Unit == "h")
+            {
+                DateAchie2.IsVisible = true;
+                TimeAchie2.IsVisible = true;
+                DateAchie2.Date = d.Date;
+                TimeAchie2.Time = new TimeSpan(d.TimeOfDay.Ticks);
+            }
+            else
+            {
+                DateAchie2.IsVisible = false;
+                TimeAchie2.IsVisible = false;
+            }
+
             DateAchie2.Date = d.Date;
             TimeAchie2.Time = new TimeSpan(d.TimeOfDay.Ticks);
 
@@ -96,7 +109,9 @@ namespace App15.Views
                         _actOrderAchievement.IdAchievement = modalPage._actAchievement.Id;
                         _actOrderAchievement.AchieNumber = modalPage._actAchievement.AchieNumber;
                         _actOrderAchievement.AchieName = modalPage._actAchievement.AchieName;
-                        btnAchievement.Text = _actOrderAchievement.AchieName;
+                        _actOrderAchievement.Unit = modalPage._actAchievement.Unit;
+                        //btnAchievement.Text = _actOrderAchievement.AchieName;
+                        SetData();
                     }
                 };
                 await Navigation.PushModalAsync(modalPage);
