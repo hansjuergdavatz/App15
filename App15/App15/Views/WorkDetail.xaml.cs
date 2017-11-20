@@ -187,9 +187,23 @@ namespace App15.Views
                 setMenge();
         }
 
-        private void btnStopp_Clicked(object sender, EventArgs e)
+        private async void btnStopp_Clicked(object sender, EventArgs e)
         {
+            App.restManager = new RestManager(new Web.RestService());
 
+            try
+            {
+                var list = await App.restManager.StartStopAsync(_actOrderAchievement.Id.ToString(), false);
+                if (list != null)
+                {
+                    DependencyService.Get<IMessage>().ShortAlert("Daten gespeichert.");
+                    await Navigation.PopAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                DependencyService.Get<IMessage>().ShortAlert(ex.Message);
+            }
         }
 
         private async void btnStart_Clicked(object sender, EventArgs e)

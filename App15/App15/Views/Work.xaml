@@ -5,10 +5,11 @@
     <StackLayout BackgroundColor="{StaticResource Accent}" Padding="20">
 
         <StackLayout Orientation="Horizontal">
-            <Label Text="Datum: " FontSize="20" TextColor="White" VerticalOptions="Center"/>
-            <DatePicker x:Name="OADayDate" DateSelected="OADayDate_DateSelected" />
+            <!--<Label Text="Datum: " FontSize="20" TextColor="White" VerticalOptions="Center"/>-->
+            <DatePicker x:Name="DayDate" DateSelected="DayDate_DateSelected" />
             <Label x:Name="lblConnect" FontSize="20" TextColor="White" VerticalOptions="Center" Text="" />
             <Button x:Name="btnStart" HorizontalOptions="FillAndExpand" BackgroundColor="Gray" TextColor="White" Text="Start" Clicked="btnStart_Clicked"/>
+            <Button x:Name="btnCreate" HorizontalOptions="FillAndExpand" BackgroundColor="Gray" TextColor="White" Text="Neu" Clicked="btnCreate_Clicked"/>
         </StackLayout>
 
         <!--<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">

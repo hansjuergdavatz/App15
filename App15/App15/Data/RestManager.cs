@@ -46,6 +46,10 @@ namespace App15.Data
         {
             return restService.GetNewOrderAchievementAsync(IdOrder, IdAchievement, start, listDetail);
         }
+        public Task<List<OrderAchievement>> StartStopAsync(string IdOrderAchievement, bool start)
+        {
+            return restService.StartStopAsync(IdOrderAchievement, start);
+        }
         public Task<List<OrderAchievement>> GetListOrderAchievementAsync(DateTime day, bool listDetail)
         {
             return restService.GetListOrderAchievementAsync(day, listDetail);

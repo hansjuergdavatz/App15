@@ -33,8 +33,8 @@ namespace App15.Views
             _user = await App.Database.GetCoworker();
             if (_user != null)
             {
-                OADayDate.Date = DateTime.Now;
-                _dateSelected = OADayDate.Date;
+                DayDate.Date = DateTime.Now;
+                _dateSelected = DayDate.Date;
                 await LoadList(true);
             }
 
@@ -53,8 +53,8 @@ namespace App15.Views
 
         private async void SetUIHandlers()
         {
-            OADayDate.Date = DateTime.Now;
-            _dateSelected = OADayDate.Date;
+            DayDate.Date = DateTime.Now;
+            _dateSelected = DayDate.Date;
 
             _user = await App.Database.GetCoworker();
 
@@ -118,9 +118,11 @@ namespace App15.Views
             }
         }
 
-        private void OADayDate_DateSelected(object sender, DateChangedEventArgs e)
+        private async void DayDate_DateSelected(object sender, DateChangedEventArgs e)
         {
-
+            _dateSelected = e.NewDate;
+            if (e.NewDate != e.OldDate)
+                await LoadList(true);
         }
 
         private async void OrderAchievement_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -151,6 +153,11 @@ namespace App15.Views
         private async void Refresh()
         {
             await LoadList(true);
+        }
+
+        private void btnCreate_Clicked(object sender, EventArgs e)
+        {
+
         }
 
 

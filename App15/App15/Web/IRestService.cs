@@ -18,6 +18,7 @@ namespace App15.Web
 
         // Leistungserfassung
         Task<List<OrderAchievement>> GetNewOrderAchievementAsync(string idOrder, string idAchievement, bool start, bool listDetail);
+        Task<List<OrderAchievement>> StartStopAsync(string idOrderAchievement, bool start);
         Task<List<OrderAchievement>> GetListOrderAchievementAsync(DateTime day, bool listDetail);
         Task<bool> UpdateOrderAchievement(OrderAchievement item);
         Task<bool> DeleteOrderAchievement(OrderAchievement item);
