@@ -25,25 +25,29 @@ namespace App15.Views
         }
         private void SetData()
         {
+            DateTime d = DateTime.Now;
+
             btnOrder.Text = _actOrderAchievement.OrderNrDesc;
             btnAchievement.Text = _actOrderAchievement.AchieName;
 
             DateAchie.Date = _actOrderAchievement.DateTimeAchie.Date;
             TimeAchie.Time = new TimeSpan(_actOrderAchievement.DateTimeAchie.TimeOfDay.Ticks);
 
-            DateTime d = DateTime.Now;
+            switch (_actOrderAchievement.Status)
+            {
+                case 100:
+                    btnStopp.IsVisible = true;
+                    btnStart.IsVisible = false;
+                    break;
 
-            if (_actOrderAchievement.Status == 100)
-            {
-                btnStopp.IsVisible = true;
-                btnStart.IsVisible = false;
-            }
-            else
-            {
-                if (_actOrderAchievement.DateTimeAchie2 != null)
-                    d = (DateTime)_actOrderAchievement.DateTimeAchie2;
-                btnStart.IsVisible = true;
-                btnStopp.IsVisible = false;
+                case 200:
+                case 300:
+                    btnStart.IsVisible = true;
+                    btnStopp.IsVisible = false;
+                    break;
+
+                default:
+                    break;
             }
 
             if (_actOrderAchievement.Unit == "h")
@@ -179,10 +183,14 @@ namespace App15.Views
                 dateTo = DateTime.Now;
             }
 
-            TimeSpan timeSpan = dateTo - _actOrderAchievement.DateTimeAchie;
-            Double l = timeSpan.TotalHours;
-            _actOrderAchievement.Amount = Convert.ToDecimal(l);
-            Menge.Text = _actOrderAchievement.Amount.ToString("0.00");
+            if (_actOrderAchievement.Unit == "h")
+            {
+                TimeSpan timeSpan = dateTo - _actOrderAchievement.DateTimeAchie;
+                Double l = timeSpan.TotalHours;
+                _actOrderAchievement.Amount = Convert.ToDecimal(l);
+                Menge.Text = _actOrderAchievement.Amount.ToString("0.00");
+            }
+
         }
 
         private void TimeAchie_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
