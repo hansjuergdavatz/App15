@@ -24,7 +24,7 @@ namespace App15.Web
         Task<bool> DeleteOrderAchievement(OrderAchievement item);
 
         Task<List<Order>> GetOrderList(string search);
-        Task<List<Achievement>> GetAchievementList(string search);
+        Task<List<Achievement>> GetAchievementList(string idOrder, string searchValue, bool filterPosition);
 
     }
 }

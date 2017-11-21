@@ -106,6 +106,7 @@ namespace App15.Views
             try
             {
                 var modalPage = new AchievementSearch();
+                modalPage._actOrderId = _actOrderAchievement.IdOrder;
                 modalPage.Disappearing += (sender2, e2) =>
                 {
                     if (modalPage._actAchievement != null)

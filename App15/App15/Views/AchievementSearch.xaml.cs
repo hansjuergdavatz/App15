@@ -16,6 +16,7 @@ namespace App15.Views
 	{
         List<Achievement> list = null;
         public Achievement _actAchievement = null;
+        public Guid _actOrderId = Guid.Empty;
 
 
         public AchievementSearch ()
@@ -28,7 +29,7 @@ namespace App15.Views
             try
             {
                 App.restManager = new RestManager(new Web.RestService());
-                list = await App.restManager.GetAchievementList(txtSearch.Text);
+                list = await App.restManager.GetAchievementList(_actOrderId.ToString(), txtSearch.Text, false);
                 if (list != null)
                 {
                     AchievementListView.ItemsSource = list;
@@ -46,7 +47,7 @@ namespace App15.Views
             foreach (Achievement item in list)
             {
                 item.TxtLarge = item.AchieNumber;
-                item.TxtSmall = item.AchieName;
+                item.TxtSmall = item.AchieName + " " + item.Unit;
             }
         }
 

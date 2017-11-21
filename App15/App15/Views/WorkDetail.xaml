@@ -28,7 +28,7 @@
             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                 <Label Text="Menge" TextColor="White" FontSize="Small"></Label>
                 <Entry x:Name="Menge" Text="" FontSize="Medium" Keyboard="Numeric"  />
-                <Entry x:Name="Unit" Text="" FontSize="Medium" />
+                <Label x:Name="Unit" Text="" FontSize="Medium" />
                 <ctrls:CheckBox x:Name="chkCharge" Grid.Row="8" Grid.Column="1" ShowLabel="True" Text="Verrechenbar" HorizontalOptions="EndAndExpand" Checked="True" />
             </StackLayout>
 

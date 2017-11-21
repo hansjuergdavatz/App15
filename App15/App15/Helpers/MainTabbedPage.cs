@@ -12,10 +12,6 @@ namespace App15.Helpers
     {
         public MainTabbedPage()
         {
-            //var playPage = new Time() { Title = "TIMEDOC Zeiten", Icon = "tab_feed.png" };
-            //var settingsPage = new AboutPage() { Title = "About", Icon = "tab_about.png" };
-            //var aboutPage = new Login() { Title = "Login", Icon = "p_generic.png" };
-
             var playPage = new Time() { Title = "TIMEDOC Zeiten", Icon = null };
             var workPage = new NavigationPage(new Work() { Title = "Leistungserfassung", Icon = null });
             var settingsPage = new AboutPage() { Title = "About", Icon = null };
@@ -46,33 +42,10 @@ namespace App15.Helpers
             Children.Add(workPage);
             Children.Add(settingsPage);
             Children.Add(aboutPage);
-
-            // Do not embedded your ContentPages within a "single" level NavigationPage.
-
-            //      Children.Add(new NavigationPage(new Time())
-            //      {
-            //        Title = "TIMEDOC Zeiten",
-            //        Icon = Device.OnPlatform("tab_feed.png", null, null)
-            //      }
-            //);
-            //      Children.Add(new NavigationPage(new AboutPage())
-            //      {
-            //        Title = "About",
-            //        Icon = Device.OnPlatform("tab_about.png", null, null)
-            //      }
-            //);
-            //      Children.Add(new NavigationPage(new Login())
-            //      {
-            //        Title = "Account",
-            //        Icon = Device.OnPlatform("tab_about.png", null, null)
-            //      }
-            //      );
-
         }
 
         public void SwitchTab(int index)
         {
-            //  ((TabbedPage)Current.MainPage).CurrentPage = ((TabbedPage)Current.MainPage).Children[2];
             CurrentPage = this.Children[index];
         }
     }

@@ -44,7 +44,6 @@
     <Compile Include="Data\RestManager.cs" />
     <Compile Include="Data\TimedocDatabase.cs" />
     <Compile Include="Data\WorkingTimeStorage.cs" />
-    <Compile Include="Helpers\EditorCtrl.cs" />
     <Compile Include="Helpers\IFileHelper.cs" />
     <Compile Include="Helpers\IMessage.cs" />
     <Compile Include="Helpers\INetworkConnection.cs" />

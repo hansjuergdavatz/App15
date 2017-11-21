@@ -68,9 +68,9 @@ namespace App15.Data
         {
             return restService.GetOrderList(search);
         }
-        public Task<List<Achievement>> GetAchievementList(string search)
+        public Task<List<Achievement>> GetAchievementList(string idOrder, string search, bool filterPosition)
         {
-            return restService.GetAchievementList(search);
+            return restService.GetAchievementList(idOrder, search, filterPosition);
         }
     }
 }

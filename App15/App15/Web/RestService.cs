@@ -352,12 +352,13 @@ namespace App15.Web
 
             return list;
         }
-        public async Task<List<Achievement>> GetAchievementList(string search)
+        public async Task<List<Achievement>> GetAchievementList(string idOrder, string searchValue, bool filterPosition)
         {
             List<Achievement> list = null;
 
-            // http://localhost:63491/api/order/list/readcount?SearchValue=Manufacture%20Wolf%20SA
-            string resource = String.Format("{0}achivement/list?SearchValue={1}", Constants.RestUrl, search);
+            // http://localhost:63491/api/achivement/order/list?IdOrder=3CFD45D0-6674-4741-A5FB-852699981E23&SearchValue=spe&filterPosition=false
+
+            string resource = String.Format("{0}achivement/order/list?IdOrder={1}&SearchValue={2}&filterPosition={3}", Constants.RestUrl, idOrder, searchValue, filterPosition);
             var uri = new Uri(string.Format(resource, string.Empty));
 
             try
