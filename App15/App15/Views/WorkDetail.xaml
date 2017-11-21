@@ -4,7 +4,7 @@
              x:Class="App15.Views.WorkDetail"
              xmlns:ctrls="clr-namespace:AsNum.XFControls;assembly=AsNum.XFControls">
     <ContentPage.Content>
-        <StackLayout BackgroundColor="{StaticResource Accent}" Padding="20">
+        <StackLayout BackgroundColor="{StaticResource Accent}" Padding="10">
 
             <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
                 <Button x:Name="btnOrder" HorizontalOptions="FillAndExpand" BackgroundColor="Gray" TextColor="White" Text="Auftrag" Clicked="btnOrder_Clicked"/>
@@ -32,9 +32,9 @@
                 <ctrls:CheckBox x:Name="chkCharge" Grid.Row="8" Grid.Column="1" ShowLabel="True" Text="Verrechenbar" HorizontalOptions="EndAndExpand" Checked="True" />
             </StackLayout>
 
-            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+            <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
                 <Label Text="Info" TextColor="White" FontSize="Small"></Label>
-                <Entry x:Name="Info" Text="" FontSize="Medium" HorizontalOptions="FillAndExpand" />
+                <Editor x:Name="Info" Text="" FontSize="Small"></Editor>
             </StackLayout>
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">

@@ -68,7 +68,7 @@ namespace App15.Views
 
             Menge.Text = _actOrderAchievement.Amount.ToString("0.00");
             Unit.Text = _actOrderAchievement.Unit;
-
+            Info.Text = _actOrderAchievement.Remark;
 
             if (_actOrderAchievement.FlagCharge)
                 chkCharge.Checked = true;
