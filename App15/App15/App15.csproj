@@ -47,14 +47,17 @@
     <Compile Include="Helpers\IFileHelper.cs" />
     <Compile Include="Helpers\IMessage.cs" />
     <Compile Include="Helpers\INetworkConnection.cs" />
+    <Compile Include="Helpers\IOrientationService.cs" />
     <Compile Include="Helpers\ISQLiteService.cs" />
     <Compile Include="Helpers\MainTabbedPage.cs" />
     <Compile Include="Helpers\ObservableObject.cs" />
     <Compile Include="Models\Achievement.cs" />
     <Compile Include="Models\AppConfiguration.cs" />
+    <Compile Include="Models\CostUnit.cs" />
     <Compile Include="Models\Coworker.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderAchievement.cs" />
+    <Compile Include="Models\Setting.cs" />
     <Compile Include="Models\WorkingTime.cs" />
     <Compile Include="Models\WorkingTimeDataAcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -65,6 +68,9 @@
     </Compile>
     <Compile Include="Views\AchievementSearch.xaml.cs">
       <DependentUpon>AchievementSearch.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CostSearch.xaml.cs">
+      <DependentUpon>CostSearch.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
@@ -208,6 +214,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\AchievementSearch.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\CostSearch.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

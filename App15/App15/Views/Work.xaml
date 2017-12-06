@@ -2,40 +2,76 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App15.Views.Work">
-    <StackLayout BackgroundColor="{StaticResource Accent}" Padding="20">
+  <StackLayout BackgroundColor="{StaticResource Accent}" Padding="20">
 
-        <StackLayout Orientation="Horizontal">
-            <!--<Label Text="Datum: " FontSize="20" TextColor="White" VerticalOptions="Center"/>-->
-            <DatePicker x:Name="DayDate" DateSelected="DayDate_DateSelected" />
-            <Label x:Name="lblConnect" FontSize="20" TextColor="White" VerticalOptions="Center" Text="" />
-            <Button x:Name="btnStart" HorizontalOptions="FillAndExpand" BackgroundColor="Gray" TextColor="White" Text="Start" Clicked="btnStart_Clicked"/>
-            <Button x:Name="btnCreate" HorizontalOptions="FillAndExpand" BackgroundColor="Gray" TextColor="White" Text="Neu" Clicked="btnCreate_Clicked"/>
-        </StackLayout>
+    <StackLayout Orientation="Horizontal">
+      <DatePicker x:Name="DayDate" DateSelected="DayDate_DateSelected">
+        <DatePicker.HeightRequest>
+          <OnPlatform x:TypeArguments="x:Double">
+            <On Platform="iOS">42</On>
+            <On Platform="Android,Windows">42</On>
+          </OnPlatform>
+        </DatePicker.HeightRequest>
+      </DatePicker>
+      <Button x:Name="btnStart" HorizontalOptions="FillAndExpand" BackgroundColor="Gray" TextColor="White" Text="Start" Clicked="btnStart_Clicked">
+        <Button.HeightRequest>
+          <OnPlatform x:TypeArguments="x:Double">
+            <On Platform="iOS">40</On>
+            <On Platform="Android,Windows">40</On>
+          </OnPlatform>
+        </Button.HeightRequest>
+      </Button>
+      <Button x:Name="btnCreate" HorizontalOptions="FillAndExpand" BackgroundColor="Gray" TextColor="White" Text="Neu" Clicked="btnCreate_Clicked">
+        <Button.HeightRequest>
+          <OnPlatform x:TypeArguments="x:Double">
+            <On Platform="iOS">40</On>
+            <On Platform="Android,Windows">40</On>
+          </OnPlatform>
+        </Button.HeightRequest>
+      </Button>
+    </StackLayout>
+    <ActivityIndicator x:Name="waitCursor" Color="Red" IsRunning="False" IsVisible="False" />
 
-        <!--<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-            <Button x:Name="btnCreate" HorizontalOptions="FillAndExpand" BackgroundColor="Gray" TextColor="White" Text="Erfassen" Clicked="btnCreate_Clicked"/>
-            --><!--<Button x:Name="btnList" HorizontalOptions="FillAndExpand" BackgroundColor="Gray" TextColor="White" Text="Detail" Clicked="btnList_Clicked"/>--><!--
-        </StackLayout>-->
+    <ListView x:Name="OrderAchievementListView"
+            ItemsSource="{Binding Path=OrderAchievement}"
+            ListView.RowHeight="100" ItemSelected="OrderAchievement_ItemSelected" >
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <ViewCell>
+            <StackLayout Orientation="Horizontal">
+              <Image Source="{Binding Image}" />
+              <StackLayout Orientation="Vertical">
+                <Entry Text="{Binding Id}" IsVisible="False"/>
+                <Label Text="{Binding TxtLarge}" FontSize="Small" />
+                <Label x:Name="lineKST" Text="{Binding TxtSmall3}" FontSize="Small" />
+                <Label Text="{Binding TxtSmall}" FontSize="Small" />
+                <Label Text="{Binding TxtSmall2}" FontSize="Micro" />
+              </StackLayout>
+            </StackLayout>
+          </ViewCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
 
-        <ListView x:Name="OrderAchievementListView"
+    <ListView x:Name="OrderAchievementListViewSmall"
             ItemsSource="{Binding Path=OrderAchievement}"
             ListView.RowHeight="80" ItemSelected="OrderAchievement_ItemSelected" >
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <StackLayout Orientation="Horizontal">
-                            <Image Source="{Binding Image}" />
-                            <StackLayout Orientation="Vertical">
-                                <Entry Text="{Binding Id}" IsVisible="False"/>
-                                <Label Text="{Binding TxtLarge}" FontSize="Small" />
-                                <Label Text="{Binding TxtSmall}" FontSize="Small" />
-                                <Label Text="{Binding TxtSmall2}" FontSize="Micro" />
-                            </StackLayout>
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <ViewCell>
+            <StackLayout Orientation="Horizontal">
+              <Image Source="{Binding Image}" />
+              <StackLayout Orientation="Vertical">
+                <Entry Text="{Binding Id}" IsVisible="False"/>
+                <Label Text="{Binding TxtLarge}" FontSize="Small" />
+                <Label Text="{Binding TxtSmall}" FontSize="Small" />
+                <Label Text="{Binding TxtSmall2}" FontSize="Micro" />
+              </StackLayout>
+            </StackLayout>
+          </ViewCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
 
-    </StackLayout>
+  </StackLayout>
 </ContentPage>
