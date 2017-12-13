@@ -49,7 +49,6 @@ namespace App15.Web
 
       // http://localhost:63491/api/coworker?loginName=h.davatz%40gmx.ch
       string resource = String.Format("{0}coworker?loginname={1}", Constants.RestUrl, loginName);
-      //resource = "http://caprex.ddns.net:5505/api/ping";
 
       var uri = new Uri(string.Format(resource, string.Empty));
 
@@ -176,7 +175,7 @@ namespace App15.Web
     }
 
     // Leistungserfassung
-    public async Task<List<OrderAchievement>> GetNewOrderAchievementAsync(string idOrder, string idAchievement, bool start, bool listDetail)
+    public async Task<List<OrderAchievement>> GetNewOrderAchievementAsync(string idOrder, string idAchievement, bool start, bool listDetail, string idCostUnit)
     {
       // http://localhost:63491/api/orderAchievement/neu?idOrder=00000000-0000-0000-0000-000000000000&idAchievement=00000000-0000-0000-0000-000000000000&start=true&listDetail=true&sortDesc=true
 
@@ -187,7 +186,7 @@ namespace App15.Web
       if (idAchievement.Length == 0 && idOrder.Length == 0)
         resource = String.Format("{0}orderAchievement/neu?idOrder={1}&idAchievement={2}&start={3}&listDetail={4}&sortDesc=true", Constants.RestUrl, guidEmpty, guidEmpty, start, listDetail);
       else
-        resource = String.Format("{0}orderAchievement/neu?idOrder={1}&idAchievement={2}&start={3}&listDetail={4}&sortDesc=true", Constants.RestUrl, idOrder, idAchievement, start, listDetail);
+        resource = String.Format("{0}orderAchievement/neu?idOrder={1}&idAchievement={2}&start={3}&listDetail={4}&idCostUnit={5}&sortDesc=true", Constants.RestUrl, idOrder, idAchievement, start, listDetail, idCostUnit);
 
       var uri = new Uri(string.Format(resource, string.Empty));
 
@@ -393,6 +392,8 @@ namespace App15.Web
         if (response.IsSuccessStatusCode)
         {
           var content = await response.Content.ReadAsStringAsync();
+
+
           setting = JsonConvert.DeserializeObject<Setting>(content);
         }
       }
@@ -429,5 +430,55 @@ namespace App15.Web
 
       return list;
     }
+
+    public async Task<bool> SetSignatureAsync(CSignature unterschrift)
+    {
+      // http://localhost:63491/api/signature
+
+      string resource = String.Format("{0}signature", Constants.RestUrl);
+      var uri = new Uri(string.Format(resource, unterschrift));
+
+      try
+      {
+        var json = JsonConvert.SerializeObject(unterschrift);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        HttpResponseMessage response = null;
+
+        response = await client.PostAsync(uri, content);
+        if (response.IsSuccessStatusCode)
+        {
+          return true;
+        }
+      }
+      catch (Exception ex)
+      {
+        Debug.WriteLine(@"				ERROR {0}", ex.Message);
+      }
+      return false;
+    }
+    public async Task<bool> GetSignatureAsync(Guid idSignature)
+    {
+      CSignature signature = null;
+
+      string resource = String.Format("{0}signature?idSignature={1}", Constants.RestUrl,idSignature.ToString());
+      var uri = new Uri(string.Format(resource, string.Empty));
+
+      try
+      {
+        var response = await client.GetAsync(uri);
+        if (response.IsSuccessStatusCode)
+        {
+          var content = await response.Content.ReadAsStringAsync();
+          signature = JsonConvert.DeserializeObject<CSignature>(content);
+        }
+      }
+      catch (Exception ex)
+      {
+        Debug.WriteLine(@"				ERROR {0}", ex.Message);
+      }
+      return false;
+    }
+
   }
 }

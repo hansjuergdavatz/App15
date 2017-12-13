@@ -55,6 +55,7 @@
     <Compile Include="Models\AppConfiguration.cs" />
     <Compile Include="Models\CostUnit.cs" />
     <Compile Include="Models\Coworker.cs" />
+    <Compile Include="Models\CSignature.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderAchievement.cs" />
     <Compile Include="Models\Setting.cs" />
@@ -77,6 +78,9 @@
     </Compile>
     <Compile Include="Views\OrderSearch.xaml.cs">
       <DependentUpon>OrderSearch.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Signature.xaml.cs">
+      <DependentUpon>Signature.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Time.xaml.cs">
       <DependentUpon>Time.xaml</DependentUpon>
@@ -132,6 +136,9 @@
     <Reference Include="Plugin.Connectivity.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xam.Plugin.Connectivity.3.0.2\lib\netstandard1.0\Plugin.Connectivity.Abstractions.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="SignaturePad.Forms, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xamarin.Controls.SignaturePad.Forms.2.3.0\lib\portable-net45+win+wp8+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SignaturePad.Forms.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.Extensions, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net45+win8+wpa81\System.Net.Http.Extensions.dll</HintPath>
@@ -220,6 +227,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\CostSearch.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Signature.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

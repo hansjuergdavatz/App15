@@ -134,11 +134,7 @@ namespace App15.Views
     {
       try
       {
-#if DEBUG
-        URLConnection urlConnection = new URL("http://caprex.ddns.net:5505/api/ping").OpenConnection();
-#else
-        URLConnection urlConnection = new URL("https://www.timedoc.ch/RestService/api/ping").OpenConnection();
-#endif
+        URLConnection urlConnection = new URL(Constants.RestUrl + "/ping").OpenConnection();
         urlConnection.ReadTimeout = 400;
         urlConnection.Connect();
         return true;

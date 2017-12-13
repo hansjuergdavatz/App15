@@ -17,7 +17,7 @@ namespace App15.Web
     Task DeleteWorkingTimeAsync(Guid id);
 
     // Leistungserfassung
-    Task<List<OrderAchievement>> GetNewOrderAchievementAsync(string idOrder, string idAchievement, bool start, bool listDetail);
+    Task<List<OrderAchievement>> GetNewOrderAchievementAsync(string idOrder, string idAchievement, bool start, bool listDetail, string idCostUni);
     Task<List<OrderAchievement>> StartStopAsync(string idOrderAchievement, bool start);
     Task<List<OrderAchievement>> GetListOrderAchievementAsync(DateTime day, bool listDetail);
     Task<bool> UpdateOrderAchievement(OrderAchievement item);
@@ -29,5 +29,7 @@ namespace App15.Web
     Task<Setting> GetSettingAsync(string name);
 
     Task<List<CostUnit>> GetCostUnitAsync(string name);
+
+    Task<bool> SetSignatureAsync(CSignature unterschrift);
   }
 }

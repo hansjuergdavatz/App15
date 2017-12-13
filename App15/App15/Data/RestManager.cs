@@ -42,9 +42,9 @@ namespace App15.Data
     }
 
     // Leistungserfassung
-    public Task<List<OrderAchievement>> GetNewOrderAchievementAsync(string IdOrder, string IdAchievement, bool start, bool listDetail)
+    public Task<List<OrderAchievement>> GetNewOrderAchievementAsync(string IdOrder, string IdAchievement, bool start, bool listDetail, string idCostUni)
     {
-      return restService.GetNewOrderAchievementAsync(IdOrder, IdAchievement, start, listDetail);
+      return restService.GetNewOrderAchievementAsync(IdOrder, IdAchievement, start, listDetail, idCostUni);
     }
     public Task<List<OrderAchievement>> StartStopAsync(string IdOrderAchievement, bool start)
     {
@@ -81,6 +81,11 @@ namespace App15.Data
     {
       return restService.GetCostUnitAsync(search);
     }
+    public Task<bool> SetSignatureAsync(CSignature unterschrift)
+    {
+      return restService.SetSignatureAsync(unterschrift);
+    }
+
 
   }
 }

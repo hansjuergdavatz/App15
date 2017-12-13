@@ -15,6 +15,7 @@ namespace App15.Views
   [XamlCompilation(XamlCompilationOptions.Compile)]
   public partial class Work : ContentPage
   {
+    bool _setActDay = false;
     bool _hasCostUnit = false;
     Coworker _user = null;
     DateTime _dateSelected = DateTime.MinValue;
@@ -24,6 +25,9 @@ namespace App15.Views
     public Work()
     {
       InitializeComponent();
+
+      //ReadSetting();
+
       SetUIHandlers();
     }
 
@@ -38,6 +42,22 @@ namespace App15.Views
         {
           _hasCostUnit = true;  // Kostenträger in Verwendung
         }
+
+        if (_hasCostUnit)
+        {
+          OrderAchievementListView.IsVisible = true;
+          OrderAchievementListView.RowHeight = 100;
+          OrderAchievementListViewSmall.IsVisible = false;
+          OrderAchievementListViewSmall.RowHeight = 0;
+        }
+        else
+        {
+          OrderAchievementListViewSmall.IsVisible = true;
+          OrderAchievementListViewSmall.RowHeight = 80;
+          OrderAchievementListView.IsVisible = false;
+          OrderAchievementListView.RowHeight = 0;
+        }
+
       }
     }
 
@@ -58,15 +78,23 @@ namespace App15.Views
         //  OrderAchievementListView.ItemsSource = null;
         //else
         //  OrderAchievementListViewSmall.ItemsSource = null;
-
-
       }
 
       //_user = await App.Database.GetCoworker();
       if (_user != null)
       {
-        if (_dateSelected == DateTime.MinValue)
+        if (_actOrderAchievement != null)
+        {
+          _setActDay = _actOrderAchievement.IsActDay;
+          DayDate.Date = DateTime.Now;
+        }
+
+        if (_dateSelected == DateTime.MinValue || _setActDay)
+        {
           _dateSelected = DayDate.Date;
+          _actOrderAchievement.IsActDay = false;
+        }
+
         await LoadList(true);
       }
     }
@@ -76,14 +104,12 @@ namespace App15.Views
       DayDate.Date = DateTime.Now;
       _dateSelected = DayDate.Date;
 
-
-      ReadSetting();
-
-
-
       _user = await App.Database.GetCoworker();
       if (_user != null)
+      {
+        ReadSetting();
         await LoadList(true);
+      }
     }
 
     async Task LoadList(bool detail)
@@ -96,26 +122,29 @@ namespace App15.Views
         list = await App.restManager.GetListOrderAchievementAsync(_dateSelected, detail);
         if (list != null)
         {
-          if (_hasCostUnit)
+          if (list.Count > 0)
           {
-            OrderAchievementListView.IsVisible = true;
-            OrderAchievementListView.RowHeight = 100;
-            OrderAchievementListViewSmall.IsVisible = false;
-            OrderAchievementListViewSmall.RowHeight = 0;
+            SetDisplayText();
+            if (_hasCostUnit)
+            {
+              OrderAchievementListView.ItemsSource = list;
+              OrderAchievementListView.IsVisible = true;
+              OrderAchievementListViewSmall.IsVisible = false;
+            }
+            else
+            {
+              OrderAchievementListViewSmall.ItemsSource = list;
+              OrderAchievementListView.IsVisible = false;
+              OrderAchievementListViewSmall.IsVisible = true;
+            }
           }
           else
           {
-            OrderAchievementListViewSmall.IsVisible = true;
-            OrderAchievementListViewSmall.RowHeight = 80;
-            OrderAchievementListView.IsVisible = false;
-            OrderAchievementListView.RowHeight = 0;
+            if (_hasCostUnit)
+              OrderAchievementListView.ItemsSource = null;
+            else
+              OrderAchievementListViewSmall.ItemsSource = null;
           }
-
-          SetDisplayText();
-          if (_hasCostUnit)
-            OrderAchievementListView.ItemsSource = list;
-          else
-            OrderAchievementListViewSmall.ItemsSource = list;
         }
       }
       catch (Exception)
@@ -166,12 +195,16 @@ namespace App15.Views
 
       try
       {
-        list = await App.restManager.GetNewOrderAchievementAsync(string.Empty, string.Empty, true, true);
-        if (list != null)
-        {
-          SetDisplayText();
-          OrderAchievementListView.ItemsSource = list;
-        }
+        DayDate.Date = DateTime.Now;
+        list = await App.restManager.GetNewOrderAchievementAsync(string.Empty, string.Empty, true, true, string.Empty);
+
+        await LoadList(true);
+
+        //if (list != null)
+        //{
+        //  SetDisplayText();
+        //  OrderAchievementListView.ItemsSource = list;
+        //}
       }
       catch (Exception)
       {
@@ -221,12 +254,16 @@ namespace App15.Views
 
       try
       {
-        list = await App.restManager.GetNewOrderAchievementAsync(string.Empty, string.Empty, false, true);
-        if (list != null)
-        {
-          SetDisplayText();
-          OrderAchievementListView.ItemsSource = list;
-        }
+        DayDate.Date = DateTime.Now;
+        list = await App.restManager.GetNewOrderAchievementAsync(string.Empty, string.Empty, false, true, string.Empty);
+
+        await LoadList(true);
+
+        //if (list != null)
+        //{
+        //  SetDisplayText();
+        //  OrderAchievementListView.ItemsSource = list;
+        //}
       }
       catch (Exception)
       {

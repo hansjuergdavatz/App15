@@ -69,26 +69,9 @@ namespace App15.Views
         btnCost.IsVisible = false;
         btnCost.HeightRequest = 0;
       }
-      
+
       DateAchie.Date = _actOrderAchievement.DateTimeAchie.Date;
       TimeAchie.Time = new TimeSpan(_actOrderAchievement.DateTimeAchie.TimeOfDay.Ticks);
-
-      switch (_actOrderAchievement.Status)
-      {
-        case 100:
-          btnStopp.IsVisible = true;
-          btnStart.IsVisible = false;
-          break;
-
-        case 200:
-        case 300:
-          btnStart.IsVisible = true;
-          btnStopp.IsVisible = false;
-          break;
-
-        default:
-          break;
-      }
 
       if (_actOrderAchievement.Unit == "h")
       {
@@ -103,8 +86,26 @@ namespace App15.Views
         TimeAchie2.IsVisible = false;
       }
 
-      DateAchie2.Date = d.Date;
-      TimeAchie2.Time = new TimeSpan(d.TimeOfDay.Ticks);
+      switch (_actOrderAchievement.Status)
+      {
+        case 100:
+          btnStopp.IsVisible = true;
+          btnStart.IsVisible = false;
+          break;
+
+        case 200:
+        case 300:
+          btnStart.IsVisible = true;
+          btnStopp.IsVisible = false;
+
+          DateAchie2.Date = _actOrderAchievement.DateTimeAchie.AddHours((double)_actOrderAchievement.Amount).Date;
+          TimeAchie2.Time = new TimeSpan(_actOrderAchievement.DateTimeAchie.AddHours((double)_actOrderAchievement.Amount).TimeOfDay.Ticks);
+
+          break;
+
+        default:
+          break;
+      }
 
       Menge.Text = _actOrderAchievement.Amount.ToString("0.00");
       Unit.Text = _actOrderAchievement.Unit;
@@ -230,7 +231,8 @@ namespace App15.Views
 
       try
       {
-        var list = await App.restManager.GetNewOrderAchievementAsync(_actOrderAchievement.IdOrder.ToString(), _actOrderAchievement.IdAchievement.ToString(), true, true);
+        _actOrderAchievement.IsActDay = true;
+        var list = await App.restManager.GetNewOrderAchievementAsync(_actOrderAchievement.IdOrder.ToString(), _actOrderAchievement.IdAchievement.ToString(), true, true, _actOrderAchievement.IdCostUnit.ToString());
         if (list != null)
         {
           DependencyService.Get<IMessage>().ShortAlert("Daten gespeichert.");
@@ -310,9 +312,28 @@ namespace App15.Views
       await Navigation.PopAsync();
     }
 
-    private void btnSignature_Clicked(object sender, EventArgs e)
+    private async void btnSignature_Clicked(object sender, EventArgs e)
     {
+      try
+      {
+        var modalPage = new Signature();
+        modalPage.Disappearing += (sender2, e2) =>
+        {
+          if (modalPage._actOrder != null)
+          {
+            _actOrderAchievement.IdOrder = modalPage._actOrder.Id;
+            _actOrderAchievement.OrderNrDesc = modalPage._actOrder.OrderNumber + " - " + modalPage._actOrder.Description;
+            btnOrder.Text = _actOrderAchievement.OrderNrDesc;
+          }
 
+        };
+        await Navigation.PushModalAsync(modalPage);
+      }
+      catch (Exception ex)
+      {
+        string s = ex.Message;
+        throw;
+      }
     }
 
   }
