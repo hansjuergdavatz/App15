@@ -58,7 +58,10 @@ namespace App15.Models
     public string CostNrDesc { get; set; }
 
     public bool IsActDay { get; set; }
-    
+    public Guid IdSignature { get; set; }
+    public Guid IdSignatureOrder { get; set; }
+
+
     public OrderAchievement() { }
 
     public event PropertyChangedEventHandler PropertyChanged;

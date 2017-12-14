@@ -457,11 +457,11 @@ namespace App15.Web
       }
       return false;
     }
-    public async Task<bool> GetSignatureAsync(Guid idSignature)
+    public async Task<CSignature> GetSignatureAsync(string idSignature)
     {
       CSignature signature = null;
 
-      string resource = String.Format("{0}signature?idSignature={1}", Constants.RestUrl,idSignature.ToString());
+      string resource = String.Format("{0}signature?idSignature={1}", Constants.RestUrl, idSignature);
       var uri = new Uri(string.Format(resource, string.Empty));
 
       try
@@ -471,6 +471,76 @@ namespace App15.Web
         {
           var content = await response.Content.ReadAsStringAsync();
           signature = JsonConvert.DeserializeObject<CSignature>(content);
+        }
+      }
+      catch (Exception ex)
+      {
+        Debug.WriteLine(@"				ERROR {0}", ex.Message);
+      }
+      return signature;
+    }
+    public async Task<bool> DeleteSignatureAsync(string idSignature)
+    {
+      string resource = String.Format("{0}signature?idSignature={1}", Constants.RestUrl, idSignature);
+      var uri = new Uri(string.Format(resource, string.Empty));
+
+      try
+      {
+        var response = await client.DeleteAsync(uri);
+        if (response.IsSuccessStatusCode)
+        {
+          return true;
+        }
+      }
+      catch (Exception ex)
+      {
+        Debug.WriteLine(@"				ERROR {0}", ex.Message);
+      }
+      return false;
+    }
+    public async Task<bool> SetSignatureAssign(string IdSignature, string IdOrder, DateTime dateAssign)
+    {
+      // http://localhost:63491/api/signature
+
+      string dateString = string.Empty;
+      if (dateAssign != DateTime.MinValue)
+        dateString = dateAssign.ToString("yyyy-MM-dd");
+
+      string resource = String.Format("{0}signature/toAssign?idSignature={1}&idOrder={2}&dateSignature={3}", Constants.RestUrl, IdSignature, IdOrder, dateString);
+      var uri = new Uri(string.Format(resource, string.Empty));
+      var content = new StringContent(string.Empty, Encoding.UTF8, "application/json");
+
+      try
+      {
+        var response = await client.PostAsync(uri,content);
+        if (response.IsSuccessStatusCode)
+        {
+          return true;
+        }
+      }
+      catch (Exception ex)
+      {
+        Debug.WriteLine(@"				ERROR {0}", ex.Message);
+      }
+      return false;
+    }
+    public async Task<bool> DeleteSignatureAssign(string IdSignature, string IdOrder, DateTime dateAssign)
+    {
+      // http://localhost:63491/api/signature
+
+      string dateString = string.Empty;
+      if (dateAssign != DateTime.MinValue)
+        dateString = dateAssign.ToString("yyyy-MM-dd");
+
+      string resource = String.Format("{0}signature/toAssign?idSignature={1}&idOrder={2}&dateSignature={3}", Constants.RestUrl, IdSignature, IdOrder, dateString);
+      var uri = new Uri(string.Format(resource, string.Empty));
+
+      try
+      {
+        var response = await client.DeleteAsync(uri);
+        if (response.IsSuccessStatusCode)
+        {
+          return true;
         }
       }
       catch (Exception ex)

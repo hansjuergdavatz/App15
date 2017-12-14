@@ -73,14 +73,8 @@ namespace App15.Views
 
         var tabbedPage2 = tabbedPage.Parent as MainTabbedPage;
         tabbedPage2.SwitchTab(3);
-
-        //if (_hasCostUnit)
-        //  OrderAchievementListView.ItemsSource = null;
-        //else
-        //  OrderAchievementListViewSmall.ItemsSource = null;
       }
 
-      //_user = await App.Database.GetCoworker();
       if (_user != null)
       {
         if (_actOrderAchievement != null)

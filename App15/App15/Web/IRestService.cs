@@ -31,5 +31,14 @@ namespace App15.Web
     Task<List<CostUnit>> GetCostUnitAsync(string name);
 
     Task<bool> SetSignatureAsync(CSignature unterschrift);
+
+    Task<CSignature> GetSignatureAsync(string IdSignature);
+
+    Task<bool> DeleteSignatureAsync(string IdSignature);
+
+    Task<bool> SetSignatureAssign(string IdSignature, string IdOrder, DateTime dateAssign);
+    Task<bool> DeleteSignatureAssign(string IdSignature, string IdOrder, DateTime dateAssign);
+
   }
+
 }

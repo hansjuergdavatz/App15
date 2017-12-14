@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:signatures="clr-namespace:SignaturePad.Forms;assembly=SignaturePad.Forms"
              x:Class="App15.Views.Signature">
-  <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" Padding="10">
+  <StackLayout BackgroundColor="{StaticResource Accent}" Padding="20" Orientation="Vertical" HorizontalOptions="FillAndExpand">
 
     <signatures:SignaturePadView x:Name="SignatureView" BackgroundColor="AliceBlue"  WidthRequest="250" HeightRequest="350" StrokeColor="Black" StrokeWidth="3" />
 
@@ -15,7 +15,7 @@
 
     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
       <Button x:Name="btnSave" HorizontalOptions="FillAndExpand" BackgroundColor="Gray" TextColor="White" Text="Speichern" Clicked="btnSave_Clicked"/>
-      <!--<Button x:Name="btnDelete" HorizontalOptions="FillAndExpand" BackgroundColor="Gray" TextColor="White" Text="Löschen" Clicked="btnDelete_Clicked"/>-->
+      <Button x:Name="btnDelete" HorizontalOptions="FillAndExpand" BackgroundColor="Gray" TextColor="White" Text="Löschen" Clicked="btnDelete_Clicked"/>
       <Button x:Name="btnAbort" HorizontalOptions="FillAndExpand" BackgroundColor="Gray" TextColor="White" Text="Zurück" Clicked="btnAbort_Clicked"/>
     </StackLayout>
   </StackLayout>

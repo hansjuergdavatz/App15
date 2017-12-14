@@ -17,6 +17,7 @@ namespace App15.Views
   {
     OrderAchievement _actOrderAchievement = null;
     bool _hasCostUnit = false;
+    bool _setTime = false;
 
     public WorkDetail(OrderAchievement oa, bool costUnit)
     {
@@ -48,37 +49,16 @@ namespace App15.Views
       _actOrderAchievement = oa;
       _hasCostUnit = costUnit;
 
-      SetData();
-    }
-
-
-    private void SetData()
-    {
-      DateTime d = DateTime.Now;
-
-      btnOrder.Text = _actOrderAchievement.OrderNrDesc;
-      btnAchievement.Text = _actOrderAchievement.AchieName;
-
-      if (_hasCostUnit)
-      {
-        if (_actOrderAchievement.CostNrDesc != null)
-          btnCost.Text = _actOrderAchievement.CostNrDesc;
-      }
-      else
+      if (_hasCostUnit == false)
       {
         btnCost.IsVisible = false;
         btnCost.HeightRequest = 0;
       }
 
-      DateAchie.Date = _actOrderAchievement.DateTimeAchie.Date;
-      TimeAchie.Time = new TimeSpan(_actOrderAchievement.DateTimeAchie.TimeOfDay.Ticks);
-
       if (_actOrderAchievement.Unit == "h")
       {
         DateAchie2.IsVisible = true;
         TimeAchie2.IsVisible = true;
-        DateAchie2.Date = d.Date;
-        TimeAchie2.Time = new TimeSpan(d.TimeOfDay.Ticks);
       }
       else
       {
@@ -86,26 +66,26 @@ namespace App15.Views
         TimeAchie2.IsVisible = false;
       }
 
-      switch (_actOrderAchievement.Status)
-      {
-        case 100:
-          btnStopp.IsVisible = true;
-          btnStart.IsVisible = false;
-          break;
 
-        case 200:
-        case 300:
-          btnStart.IsVisible = true;
-          btnStopp.IsVisible = false;
+      SetData();
+    }
 
-          DateAchie2.Date = _actOrderAchievement.DateTimeAchie.AddHours((double)_actOrderAchievement.Amount).Date;
-          TimeAchie2.Time = new TimeSpan(_actOrderAchievement.DateTimeAchie.AddHours((double)_actOrderAchievement.Amount).TimeOfDay.Ticks);
 
-          break;
+    private void SetData()
+    {
+      btnOrder.Text = _actOrderAchievement.OrderNrDesc;
+      btnAchievement.Text = _actOrderAchievement.AchieName;
 
-        default:
-          break;
-      }
+      if (_actOrderAchievement.CostNrDesc != null)
+        btnCost.Text = _actOrderAchievement.CostNrDesc;
+
+      _setTime = false;
+      DateAchie.Date = _actOrderAchievement.DateTimeAchie.Date;
+      TimeAchie.Time = new TimeSpan(_actOrderAchievement.DateTimeAchie.TimeOfDay.Ticks);
+
+      DateAchie2.Date = _actOrderAchievement.DateTimeAchie.AddHours((double)_actOrderAchievement.Amount).Date;
+      TimeAchie2.Time = new TimeSpan(_actOrderAchievement.DateTimeAchie.AddHours((double)_actOrderAchievement.Amount).TimeOfDay.Ticks);
+      _setTime = true;
 
       Menge.Text = _actOrderAchievement.Amount.ToString("0.00");
       Unit.Text = _actOrderAchievement.Unit;
@@ -116,6 +96,20 @@ namespace App15.Views
       else
         chkCharge.Checked = false;
 
+      switch (_actOrderAchievement.Status)
+      {
+        case 100:
+          btnStopp.IsVisible = true;
+          btnStart.IsVisible = false;
+          break;
+        case 200:
+        case 300:
+          btnStart.IsVisible = true;
+          btnStopp.IsVisible = false;
+          break;
+        default:
+          break;
+      }
     }
     private void setMenge()
     {
@@ -213,12 +207,12 @@ namespace App15.Views
 
     private void TimeAchie_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
-      if (e.PropertyName == TimePicker.TimeProperty.PropertyName)
+      if (e.PropertyName == TimePicker.TimeProperty.PropertyName && _setTime)
         setMenge();
     }
     private void TimeAchie2_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
-      if (e.PropertyName == TimePicker.TimeProperty.PropertyName)
+      if (e.PropertyName == TimePicker.TimeProperty.PropertyName && _setTime)
         setMenge();
     }
 
@@ -316,14 +310,12 @@ namespace App15.Views
     {
       try
       {
-        var modalPage = new Signature();
+        var modalPage = new Signature(_actOrderAchievement);
         modalPage.Disappearing += (sender2, e2) =>
         {
-          if (modalPage._actOrder != null)
+          if (modalPage._actOrderAchievement != null)
           {
-            _actOrderAchievement.IdOrder = modalPage._actOrder.Id;
-            _actOrderAchievement.OrderNrDesc = modalPage._actOrder.OrderNumber + " - " + modalPage._actOrder.Description;
-            btnOrder.Text = _actOrderAchievement.OrderNrDesc;
+            _actOrderAchievement.IdSignature = modalPage._actOrderAchievement.IdSignature;
           }
 
         };

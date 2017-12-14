@@ -1,4 +1,5 @@
-﻿using App15.Helpers;
+﻿using App15.Data;
+using App15.Helpers;
 using App15.Models;
 using System;
 using System.Collections.Generic;
@@ -15,16 +16,36 @@ namespace App15.Views
   [XamlCompilation(XamlCompilationOptions.Compile)]
   public partial class Signature : ContentPage
   {
-    public Order _actOrder = null;
+    public OrderAchievement _actOrderAchievement = null;
     int _listIndex = 0;
 
-    public Signature()
+    public Signature(OrderAchievement oa)
     {
       InitializeComponent();
+      _actOrderAchievement = oa;
       PickerList.Items.Add("Heutige Leistungen zu Auftrag.");
       PickerList.Items.Add("Diesen Auftrag.");
       PickerList.SelectedIndex = 0;
+
+      SetData();
     }
+
+    private async void SetData()
+    {
+      if (_actOrderAchievement.IdSignature != null && _actOrderAchievement.IdSignature != Guid.Empty)
+      {
+        // Basic-http
+        App.restManager = new RestManager(new Web.RestService());
+        CSignature sig = await App.restManager.GetSignatureAsync(_actOrderAchievement.IdSignature.ToString());
+
+        if (sig != null)
+        {
+          ImageSource SigImage = ImageSource.FromStream(() => new MemoryStream(sig.Signature1.ToArray()));
+          SignatureView.BackgroundImage = SigImage;
+        }
+      }
+    }
+
 
     private async void btnSave_Clicked(object sender, EventArgs e)
     {
@@ -36,14 +57,16 @@ namespace App15.Views
       unterschrift.Signature1 = ReadFully(image); // serializeData(points);
 
       bool rc = await App.restManager.SetSignatureAsync(unterschrift);
-      if (_listIndex == 0)
+      if (rc)
+      {
+        if (_listIndex == 0)
+          rc = await App.restManager.SetSignatureAssign(unterschrift.Id.ToString(), _actOrderAchievement.IdOrder.ToString(), DateTime.Now);
+        else if (_listIndex == 1)
+          rc = await App.restManager.SetSignatureAssign(unterschrift.Id.ToString(), _actOrderAchievement.IdOrder.ToString(), DateTime.MinValue);
 
-
-      DependencyService.Get<IMessage>().ShortAlert("Unterschrift gespeichert.");
-
-
+        DependencyService.Get<IMessage>().ShortAlert("Unterschrift gespeichert.");
+      }
       await Navigation.PopModalAsync();
-
     }
 
     private async void btnAbort_Clicked(object sender, EventArgs e)
@@ -63,5 +86,23 @@ namespace App15.Views
         return ms.ToArray();
       }
     }
+
+    private async void btnDelete_Clicked(object sender, EventArgs e)
+    {
+      //if (_actOrderAchievement.IdSignature != null && _actOrderAchievement.IdSignature != Guid.Empty)
+      //{
+      //  // Basic-http
+      //  App.restManager = new RestManager(new Web.RestService());
+      //  bool sig = await App.restManager.DeleteSignatureAssign(_actOrderAchievement.IdSignature.ToString());
+
+      //  if (sig)
+      //  {
+      //    ImageSource SigImage = ImageSource.FromStream(() => new MemoryStream(sig.Signature1.ToArray()));
+      //    SignatureView.BackgroundImage = SigImage;
+      //  }
+      //}
+
+    }
+
   }
 }

@@ -85,6 +85,23 @@ namespace App15.Data
     {
       return restService.SetSignatureAsync(unterschrift);
     }
+    public Task<CSignature> GetSignatureAsync(string IdSignature)
+    {
+      return restService.GetSignatureAsync(IdSignature);
+    }
+    public Task<bool> DeleteSignatureAsync(string IdSignature)
+    {
+      return restService.DeleteSignatureAsync(IdSignature);
+    }
+
+    public Task<bool> SetSignatureAssign(string IdSignature, string IdOrder, DateTime dateAssign)
+    {
+      return restService.SetSignatureAssign(IdSignature, IdOrder, dateAssign);
+    }
+    public Task<bool> DeleteSignatureAssign(string IdSignature, string IdOrder, DateTime dateAssign)
+    {
+      return restService.DeleteSignatureAssign(IdSignature, IdOrder, dateAssign);
+    }
 
 
   }
