@@ -43,6 +43,14 @@ namespace App15.Views
           ImageSource SigImage = ImageSource.FromStream(() => new MemoryStream(sig.Signature1.ToArray()));
           SignatureView.BackgroundImage = SigImage;
         }
+
+        btnSave.IsVisible = false;
+        btnDelete.IsVisible = true;
+      }
+      else
+      {
+        btnSave.IsVisible = true;
+        btnDelete.IsVisible = false;
       }
     }
 
@@ -60,11 +68,18 @@ namespace App15.Views
       if (rc)
       {
         if (_listIndex == 0)
-          rc = await App.restManager.SetSignatureAssign(unterschrift.Id.ToString(), _actOrderAchievement.IdOrder.ToString(), DateTime.Now);
+        {
+          rc = await App.restManager.SetSignatureAssign(unterschrift.Id.ToString(), _actOrderAchievement.IdOrder.ToString(), _actOrderAchievement.DateTimeAchie);
+          _actOrderAchievement.IdSignature = unterschrift.Id;
+        }
         else if (_listIndex == 1)
+        {
           rc = await App.restManager.SetSignatureAssign(unterschrift.Id.ToString(), _actOrderAchievement.IdOrder.ToString(), DateTime.MinValue);
+          _actOrderAchievement.IdSignatureOrder = unterschrift.Id;
+        }
 
         DependencyService.Get<IMessage>().ShortAlert("Unterschrift gespeichert.");
+
       }
       await Navigation.PopModalAsync();
     }
@@ -89,18 +104,31 @@ namespace App15.Views
 
     private async void btnDelete_Clicked(object sender, EventArgs e)
     {
-      //if (_actOrderAchievement.IdSignature != null && _actOrderAchievement.IdSignature != Guid.Empty)
-      //{
-      //  // Basic-http
-      //  App.restManager = new RestManager(new Web.RestService());
-      //  bool sig = await App.restManager.DeleteSignatureAssign(_actOrderAchievement.IdSignature.ToString());
+      int setOrder = 0;
 
-      //  if (sig)
-      //  {
-      //    ImageSource SigImage = ImageSource.FromStream(() => new MemoryStream(sig.Signature1.ToArray()));
-      //    SignatureView.BackgroundImage = SigImage;
-      //  }
-      //}
+      if (_actOrderAchievement.IdSignature != null && _actOrderAchievement.IdSignature != Guid.Empty)
+        setOrder = 1;
+      else if (_actOrderAchievement.IdSignatureOrder != null && _actOrderAchievement.IdSignatureOrder != Guid.Empty)
+        setOrder = 2;
+      if (setOrder > 0)
+      {
+        DateTime dateDelete = DateTime.MinValue;
+        if (setOrder == 1)
+          dateDelete = _actOrderAchievement.DateTimeAchie;
+
+        // Basic-http
+        App.restManager = new RestManager(new Web.RestService());
+        bool sig = await App.restManager.DeleteSignatureAssign(_actOrderAchievement.IdSignature.ToString(), _actOrderAchievement.IdOrder.ToString(), dateDelete);
+
+        if (setOrder == 1)
+          _actOrderAchievement.IdSignature = Guid.Empty;
+        if (setOrder == 2)
+          _actOrderAchievement.IdSignatureOrder = Guid.Empty;
+
+        DependencyService.Get<IMessage>().ShortAlert("Unterschrift gelöscht.");
+
+      }
+      await Navigation.PopModalAsync();
 
     }
 
