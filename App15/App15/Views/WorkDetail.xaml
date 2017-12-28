@@ -122,13 +122,7 @@
       </StackLayout>
 
       <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-        <Button x:Name="btnSave" BackgroundColor="Gray" TextColor="White" Text="" Image="ic_save_black_24dp.png" Clicked="btnSave_Clicked">
-          <Button.WidthRequest>
-            <OnPlatform x:TypeArguments="x:Double">
-              <On Platform="iOS">80</On>
-              <On Platform="Android,Windows">80</On>
-            </OnPlatform>
-          </Button.WidthRequest>
+        <Button x:Name="btnSave" BackgroundColor="Gray" TextColor="White" Text="" Image="ic_save_black_24dp.png" HorizontalOptions="FillAndExpand" Clicked="btnSave_Clicked">
           <Button.HeightRequest>
             <OnPlatform x:TypeArguments="x:Double">
               <On Platform="iOS">40</On>
@@ -136,13 +130,7 @@
             </OnPlatform>
           </Button.HeightRequest>
         </Button>
-        <Button x:Name="btnDelete" BackgroundColor="Gray" TextColor="White" Text="" Image="ic_delete_black_24dp.png" Clicked="btnDelete_Clicked">
-          <Button.WidthRequest>
-            <OnPlatform x:TypeArguments="x:Double">
-              <On Platform="iOS">80</On>
-              <On Platform="Android,Windows">80</On>
-            </OnPlatform>
-          </Button.WidthRequest>
+        <Button x:Name="btnDelete" BackgroundColor="Gray" TextColor="White" Text="" Image="ic_delete_black_24dp.png" HorizontalOptions="FillAndExpand" Clicked="btnDelete_Clicked">
           <Button.HeightRequest>
             <OnPlatform x:TypeArguments="x:Double">
               <On Platform="iOS">40</On>
@@ -150,13 +138,7 @@
             </OnPlatform>
           </Button.HeightRequest>
         </Button>
-        <Button x:Name="btnAbort" BackgroundColor="Gray" TextColor="White" Text="" Image="ic_arrow_back_black_24dp.png" Clicked="btnAbort_Clicked">
-          <Button.WidthRequest>
-            <OnPlatform x:TypeArguments="x:Double">
-              <On Platform="iOS">80</On>
-              <On Platform="Android,Windows">80</On>
-            </OnPlatform>
-          </Button.WidthRequest>
+        <Button x:Name="btnAbort" BackgroundColor="Gray" TextColor="White" Text="" Image="ic_arrow_back_black_24dp.png" HorizontalOptions="FillAndExpand" Clicked="btnAbort_Clicked">
           <Button.HeightRequest>
             <OnPlatform x:TypeArguments="x:Double">
               <On Platform="iOS">40</On>
@@ -164,13 +146,7 @@
             </OnPlatform>
           </Button.HeightRequest>
         </Button>
-        <Button x:Name="btnSignature" BackgroundColor="Gray" TextColor="White" Text="" Image="ic_border_color_black_24dp.png" Clicked="btnSignature_Clicked">
-          <Button.WidthRequest>
-            <OnPlatform x:TypeArguments="x:Double">
-              <On Platform="iOS">80</On>
-              <On Platform="Android,Windows">80</On>
-            </OnPlatform>
-          </Button.WidthRequest>
+        <Button x:Name="btnSignature" BackgroundColor="Gray" TextColor="White" Text="" Image="ic_border_color_black_24dp.png" HorizontalOptions="FillAndExpand" Clicked="btnSignature_Clicked">
           <Button.HeightRequest>
             <OnPlatform x:TypeArguments="x:Double">
               <On Platform="iOS">40</On>

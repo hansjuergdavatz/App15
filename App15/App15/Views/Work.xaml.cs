@@ -17,6 +17,7 @@ namespace App15.Views
   {
     bool _setActDay = false;
     bool _hasCostUnit = false;
+    bool _signatureAktiv = false;
     Coworker _user = null;
     DateTime _dateSelected = DateTime.MinValue;
     OrderAchievement _actOrderAchievement = null;
@@ -57,7 +58,14 @@ namespace App15.Views
           OrderAchievementListView.IsVisible = false;
           OrderAchievementListView.RowHeight = 0;
         }
-
+      }
+      setting = await App.restManager.GetSettingAsync("SignatureMobile");
+      if (setting != null)
+      {
+        if (setting.Value == "1")
+        {
+          _signatureAktiv = true;  
+        }
       }
     }
 
@@ -224,7 +232,7 @@ namespace App15.Views
         _actOrderAchievement = e.SelectedItem as OrderAchievement;
         if (_actOrderAchievement == null)
           return;
-        await Navigation.PushAsync(new WorkDetail(_actOrderAchievement, _hasCostUnit));
+        await Navigation.PushAsync(new WorkDetail(_actOrderAchievement, _hasCostUnit, _signatureAktiv));
 
       }
       catch (Exception ex)

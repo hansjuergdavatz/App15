@@ -19,7 +19,7 @@ namespace App15.Views
     bool _hasCostUnit = false;
     bool _setTime = false;
 
-    public WorkDetail(OrderAchievement oa, bool costUnit)
+    public WorkDetail(OrderAchievement oa, bool costUnit, bool signature)
     {
       InitializeComponent();
 
@@ -45,6 +45,10 @@ namespace App15.Views
           break;
       }
 
+      if (signature)
+        btnSignature.IsVisible = true;
+      else
+        btnSignature.IsVisible = false;
 
       _actOrderAchievement = oa;
       _hasCostUnit = costUnit;
@@ -66,10 +70,18 @@ namespace App15.Views
         TimeAchie2.IsVisible = false;
       }
 
+      if (signature)
+      {
+        btnSignature.IsVisible = true;
+      }
+      else
+      {
+        btnSignature.IsVisible = false;
+        btnSignature.WidthRequest = 0;
+      }
 
       SetData();
     }
-
 
     private void SetData()
     {
