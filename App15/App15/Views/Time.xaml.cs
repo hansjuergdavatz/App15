@@ -139,7 +139,7 @@ namespace App15.Views
         urlConnection.Connect();
         return true;
       }
-      catch (Exception e)
+      catch (Exception)
       {
         return false;
       }
@@ -160,7 +160,7 @@ namespace App15.Views
 
         return true;
       }
-      catch (IOException e)
+      catch (IOException)
       {
         return false;
       }

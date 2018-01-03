@@ -88,7 +88,7 @@ namespace App15.Views
         if (_actOrderAchievement != null)
         {
           _setActDay = _actOrderAchievement.IsActDay;
-          DayDate.Date = DateTime.Now;
+          DayDate.Date = _actOrderAchievement.DateTimeAchie; // DateTime.Now;
         }
 
         if (_dateSelected == DateTime.MinValue || _setActDay)
@@ -97,6 +97,7 @@ namespace App15.Views
           _actOrderAchievement.IsActDay = false;
         }
 
+        ReadSetting();
         await LoadList(true);
       }
     }
@@ -129,15 +130,19 @@ namespace App15.Views
             SetDisplayText();
             if (_hasCostUnit)
             {
+              OrderAchievementListView.ItemsSource = null;
               OrderAchievementListView.ItemsSource = list;
               OrderAchievementListView.IsVisible = true;
               OrderAchievementListViewSmall.IsVisible = false;
+              OrderAchievementListViewSmall.HeightRequest = 0;
             }
             else
             {
+              OrderAchievementListViewSmall.ItemsSource = null;
               OrderAchievementListViewSmall.ItemsSource = list;
-              OrderAchievementListView.IsVisible = false;
               OrderAchievementListViewSmall.IsVisible = true;
+              OrderAchievementListView.IsVisible = false;
+              OrderAchievementListView.HeightRequest = 0;
             }
           }
           else
